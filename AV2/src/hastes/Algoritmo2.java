@@ -10,22 +10,32 @@ import java.util.Arrays;
 import javax.swing.JFileChooser;
 
 
-public class Algoritmo1 {
-	public static int topDown(int haste[], int n) {
-		if(n == 0){
-			return 0;//O VALOR DE UMA HASTE DE TAMANHO 0 SEMPRE SERÁ ZERO
-		}else{
-			int maximoEncotrado = 0;
+public class Algoritmo2 {
+
+	public static final int DESCONHECIDO = -1;
+
+	public static int topDownMemo(int haste[], int memo[], int n) {
+		int maximoEncotrado = 0;
+		
+		//SE A SOLUÇÃO FOR CONHECIDA NÃO SERÁ NECESSÁRIO BUSCAR O ÓTIMO VALOR PARA ESTE N
+		if (memo[n] != DESCONHECIDO) {
+			return memo[n];
+		}
+
+		if (n == 0) {
+			memo[n] = 0;//UMA HASTE DE TAMANHO 0 SEMPRE TERÁ VALOR 0
+		} else {
+			maximoEncotrado = 0;
 			
 			//REALIZA AS COMBINAÇÕES DE MELHOR VALOR PARA O TAMANHO N
 			for (int i = 0; i < n; ++i) {
-				maximoEncotrado = Math.max(maximoEncotrado, haste[i] + topDown(haste, n - i - 1));
+				maximoEncotrado = Math.max(maximoEncotrado, haste[i] + topDownMemo(haste, memo, n - i - 1));
 			}
-
-			return maximoEncotrado;
-			
+			//ARMAZENA O MELHOR VALOR PARA TAMANHO N
+			memo[n] = maximoEncotrado;
 		}
-		
+
+		return memo[n];
 	}
 
 	public static void main(String[] args) throws IOException{
@@ -65,12 +75,17 @@ public class Algoritmo1 {
 		// Retira o último elemento inválido
 		haste = Arrays.copyOf(haste, haste.length - 1);
 		
+		//Aloca o vetor auxiliar
+		int memoria[] = new int[haste.length + 1];
+		for (int i = 0; i < memoria.length; i++)
+			memoria[i] = DESCONHECIDO;
+
 		System.out
 				.println("\n\n=================== VALORES PARA CADA TAMANHO DA HASTE ===============================");
 		for (int i = 0; i < haste.length; i++)
 			System.out.println("Tamanho " + (i + 1) + ": " + haste[i]);
 
-		System.out.println("O valor máximo que pode ser obtido para essa haste é: " + topDown(haste, haste.length));
+		System.out.println("O valor máximo que pode ser obtido para essa haste é: " + topDownMemo(haste, memoria, haste.length));
 
 		buffer.close();
 
