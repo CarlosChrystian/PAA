@@ -26,10 +26,10 @@ public class Algoritmo4 {
 
 		// interator das atividades armazenadas
 		int y = 1;
-		// interator da próxima atividade
+		// interator da proxima atividade
 		int k = 0;
 
-		// Verifica se o fim atividade atual é menor ou igual ao ínicio da próxima
+		// Verifica se o fim atividade atual menor ou igual ao inicio da proxima
 		for (int i = 1; i < n; i++) {
 			if (s[i] >= f[k]) {
 				A[y++] = a[i];
@@ -42,18 +42,20 @@ public class Algoritmo4 {
 
 	public static int getInicioAtividade(String linhaArquivo) {
 		String inicioAtividade = "";
-
+		
+		//Concatena os caracteres ate achar um espaco
 		for (int i = 0; linhaArquivo.charAt(i) != ' ' && i < linhaArquivo.length(); i++) {
 			inicioAtividade += linhaArquivo.charAt(i);
 		}
 
-		return Integer.parseInt(inicioAtividade);
+		return Integer.parseUnsignedInt(inicioAtividade);
 	}
 
 	public static int getFimAtividade(String linhaArquivo) {
 		String fimAtividade = "";
 		boolean achouFinal = false;
-
+		
+		//Copia todos os caracteres apos primeiro caractere de espaco
 		for (int i = 0; i < linhaArquivo.length(); i++) {
 			if (achouFinal)
 				fimAtividade += linhaArquivo.charAt(i);
@@ -61,7 +63,7 @@ public class Algoritmo4 {
 				achouFinal = true;
 		}
 
-		return Integer.parseInt(fimAtividade);
+		return Integer.parseUnsignedInt(fimAtividade);
 	}
 
 	public static void main(String args[]) throws IOException {
@@ -79,19 +81,24 @@ public class Algoritmo4 {
 		String linhaAtual;
 		linhaAtual = buffer.readLine();
 
-		// Armazenar os valores de ínicio e fim das atividades no vetor
+		// Armazenar os valores de inicio e fim das atividades no vetor
 		int sequenciaAtividade = 1;
 		List<Atividade> atividades = new ArrayList<Atividade>();
 		System.out.println("\n\n=================== ATIVIDADES LIDAS DO ARQUIVO ===============================");
 		while (linhaAtual != null) {
-			Atividade atividade = new Atividade(sequenciaAtividade++, getInicioAtividade(linhaAtual),
-					getFimAtividade(linhaAtual));
-			atividades.add(atividade);
-			System.out.println(atividade);
-			linhaAtual = buffer.readLine();
+			try {
+				Atividade atividade = new Atividade(sequenciaAtividade++, getInicioAtividade(linhaAtual),
+						getFimAtividade(linhaAtual));
+				atividades.add(atividade);
+				System.out.println(atividade);
+				linhaAtual = buffer.readLine();
+			} catch (NumberFormatException e) {
+				System.out.println("\nErro! A atividade na linha " + (sequenciaAtividade - 1) + " Ã© invÃ¡lida: " + linhaAtual);
+				System.exit(0);
+			}
 		}
 
-		// Ordena a lista de atividades pelo critério do fim da atividade
+		// Ordena a lista de atividades pelo critï¿½rio do fim da atividade
 		Collections.sort(atividades);
 
 		s = new int[atividades.size()];
@@ -102,7 +109,7 @@ public class Algoritmo4 {
 
 		// Exibe a lista de atividade ordenadas e armazena nos vetores
 		// principais.
-		System.out.println("\n\n========= ATIVIDADES ORDENADAS PELO TEMPO DE TÉRMINO ================");
+		System.out.println("\n\n========= ATIVIDADES ORDENADAS PELO TEMPO DE TERMINO ================");
 		for (Atividade atividade : atividades) {
 			s[i] = atividade.getInicio();
 			f[i] = atividade.getFim();
@@ -113,7 +120,7 @@ public class Algoritmo4 {
 		System.out.println("=================== ATIVIDADES SELECIONADAS ===============================");
 		System.out.printf("ATIVIDADE SELECIONADAS: [");
 		for (int nroAtividade : selecionarAtividades()) {
-			// Condição para não mostra posições vazias do vetor das atividades
+			// Codigo para nao mostra posicoes vazias do vetor das atividades
 			// que foram selecionadas
 			if (nroAtividade != 0)
 				System.out.printf("%d | ", nroAtividade);
