@@ -1,8 +1,8 @@
-# PAA
-AV2
-Ao iniciar qualquer um dos algoritmos será aberta uma janela de dialogo solicitando escolher o arquivo desejado.
+# Trabalho de Análise de Algoritmos AV2 sobre Programação dinâmica e algoritmos gulosos
+Trabalho desenvolvido em Java SE versão 8 Update 112
+Ao executar qualquer um dos algoritmos será aberta uma janela de dialogo solicitando escolher o arquivo desejado.
 
-Sobre os algoritmo um, dois e três:
+## Sobre os algoritmo um, dois e três:
 Entrada> 
 Será realizada a leitura dos valores correspondentes para cada tamanho da haste,
 considerando a quebra de linha como uma unidade de tamanho a mais.
@@ -20,7 +20,7 @@ Exceções>
 Caso a linha lida do arquivo possua caracteres inválidos para formar um número inteiro positivo,
 a execução do algoritmo será interrompida e o usuário será informado qual linha apresenta valor inválido.
 
-Sobre o algorito quarto:
+## Sobre o algorito quarto:
 Entrada> 
 Cada linha do arquivo representará uma atividade.
 O primeiro número da linha representará o em qual tempo a atividade se inicia.
